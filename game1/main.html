@@ -5,6 +5,7 @@
     <!-- <script src="https://unpkg.com/konva@8.3.5/konva.min.js"></script>
     <meta charset="utf-8" /> -->
     <title>Main Demo</title>
+    <link href="style2.css" rel="stylesheet" type="text/css" />
     <style>
         body {
             margin: 0;
@@ -16,51 +17,15 @@
             background-attachment: fixed;
             background-size: cover;
         }
-        .button {
-        border-radius: 4px;
-        background-color: #f4511e;
-        border: none;
-        color: #FFFFFF;
-        text-align: center;
-        font-size: 28px;
-        padding: 20px;
-        width: 200px;
-        transition: all 0.5s;
-        cursor: pointer;
-        margin: 5px;
-        }
-
-        .button span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-        }
-
-        .button span:after {
-        content: '\00bb';
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -20px;
-        transition: 0.5s;
-        }
-
-        .button:hover span {
-        padding-right: 25px;
-        }
-
-        .button:hover span:after {
-        opacity: 1;
-        right: 0;
-        }
     </style>
 </head>
 
 <body>  
-    <button type="button" class="button" onclick="window.location.href='game.html'"><span> game1 </span></button>
+    <button type="button" class="button" onclick="window.location.href='game.html'"><span> เกมจับคู่ตัวอักษร </span></button>
     
-    <button type="button" class="button" onclick="window.location.href='game2.html'"><span> game2 </span></button>
+    <button type="button" class="button" onclick="window.location.href='game2.html'"><span> เกมจับคู่ภาพกับตัวอักษร</span></button>
+
+    <button type="button" class="button" onclick="window.location.href='draw.html'"><span> ฝึกเขียน </span></button>
 
 </body>
 
