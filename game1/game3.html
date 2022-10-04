@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://unpkg.com/konva@8.3.5/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <link href="style1.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /* background-color: #f0f0f0; */
+            background-image: url('./assets/game3/1/bg-game1.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <h1 style="text-align:center;">เกมจับคู่ตัวอักษร</h1> -->
+    <br>
+    <button class="button" onclick="window.location.href='main.html'"><span> กลับหน้าแรก </span></button>
+    <br>
+    <div id="container"></div>
+    <script>
+        var width = window.innerWidth
+        var height = window.innerHeight
+        var sources = {
+            beach: 'win1.1.png',
+            num2: 'photo-1.1.png',
+            num2_glow: 'photo-1.2.png',
+            num2_black: 'box2-black.png', //รูปไก่ ก
+            num3: 'photo-15.1.png',
+            num3_glow: 'photo-15.2.png',
+            num3_black: 'box3-black.png', //รูป ฎ
+            num4: 'photo-22.1.png',             //รูปถุง ถ
+            num4_glow: 'photo-22.2.png',
+            num4_black: 'box4-black.png',
+            num1: 'photo-32.1.png',             //รูปเรือสำเภา ภ
+            num1_glow: 'photo-32.2.png',
+            num1_black: 'box1-black.png',
+        }
+        var numImages = sources.length
+
+        function loadImages(sources, callback) {
+            var assetDir = './assets/'
+            var images = {}
+            var loadedImages = 0
+
+            for (var src in sources) {
+                images[src] = new Image()
+                images[src].onload = function () {
+                    callback(images)
+                }
+                images[src].src = assetDir + sources[src]
+            }
+        }
+        function isNearOutline(numTH, outline) {
+            var a = numTH
+            var o = outline
+            var ax = a.x()
+            var ay = a.y()
+
+            if (ax > o.x - 20 && ax < o.x + 20 && ay > o.y - 20 && ay < o.y + 20) {
+                return true
+            } else {
+                return false
+            }
+        }
+        function drawBackground(background, beachImg, text) {
+            var context = background.getContext()
+            context.drawImage(beachImg, 0, 0)
+            context.setAttr('font', '20pt Calibri')
+            context.setAttr('textAlign', 'center')
+            context.setAttr('fillStyle', 'white')
+            context.fillText(text, background.getStage().width() / 2, 40)
+        }
+
+        function initStage(images) {
+            var stage = new Konva.Stage({
+                container: 'container',
+                width: 1600,
+                height: 1000,  //ขนาดกรอบของรูป
+            })
+            var background = new Konva.Layer()
+            var num44Layer = new Konva.Layer()
+            var num44Shapes = []
+            var score = 0
+
+            // image positions
+            var num44 = {
+                num2: {
+                    x: 400,
+                    y: 301,
+                },
+                num1: {
+                    x: 400,
+                    y: 451,
+                },
+                num4: {
+                    x: 400,
+                    y: 151,
+                },
+                num3: {
+                    x: 400,
+                    y: 1,
+                },
+            }
+
+
+            var outlines = {
+                num2_black: {  //ข
+                    x: 750,
+                    y: 1,
+                },
+                num1_black: {  //ก
+                    x: 750,
+                    y: 301,
+                },
+                num4_black: {  //ง
+                    x: 750,
+                    y: 451,
+                },
+                num3_black: {
+                    x: 750,      //ค
+                    y: 151,
+                },
+            }
+
+            // create draggable animals
+            for (var key in num44) {
+                // anonymous function to induce scope
+                ; (function () {
+                    var privKey = key
+                    var anim = num44[key]
+
+                    var numTH = new Konva.Image({
+                        image: images[key],
+                        x: anim.x,
+                        y: anim.y,
+                        draggable: true,
+                    })
+
+                    numTH.on('dragstart', function () {
+                        this.moveToTop()
+                    })
+                    /*
+                     * check if animal is in the right spot and
+                     * snap into place if it is
+                     */
+                    numTH.on('dragend', function () {
+                        var outline = outlines[privKey + '_black']
+                        if (!numTH.inRightPlace && isNearOutline(numTH, outline)) {
+                            numTH.position({
+                                x: outline.x,
+                                y: outline.y,
+                            })
+                            numTH.inRightPlace = true
+
+                            if (++score >= 4) {
+                                var text = 'You win!'
+                                drawBackground(background, images.beach, text)
+                            }
+
+                            // disable drag and drop
+                            setTimeout(function () {
+                                numTH.draggable(false)
+                            }, 50)
+                        }
+                    })
+                    // make animal glow on mouseover
+                    numTH.on('mouseover', function () {
+                        numTH.image(images[privKey + '_glow'])
+                        document.body.style.cursor = 'pointer'
+                    })
+                    // return animal on mouseout
+                    numTH.on('mouseout', function () {
+                        numTH.image(images[privKey])
+                        document.body.style.cursor = 'default'
+                    })
+
+                    numTH.on('dragmove', function () {
+                        document.body.style.cursor = 'pointer'
+                    })
+
+                    num44Layer.add(numTH)
+                    num44Shapes.push(numTH)
+                })()
+            }
+
+            // create animal outlines
+            for (var key in outlines) {
+                // anonymous function to induce scope
+                ; (function () {
+                    var imageObj = images[key]
+                    var out = outlines[key]
+
+                    var outline = new Konva.Image({
+                        image: imageObj,
+                        x: out.x,
+                        y: out.y,
+                    })
+
+                    num44Layer.add(outline)
+                })()
+            }
+
+            stage.add(background)
+            stage.add(num44Layer)
+
+            drawBackground(
+                background,
+                images.beach,
+                'Ahoy!'
+            )
+        }
+        loadImages(sources, initStage)
+    </script>
+</body>
+
+</html>
