@@ -11,7 +11,7 @@
             padding: 0;
             overflow: hidden;
             /* background-color: #f0f0f0; */
-            background-image: url('./assets/game3/1/bg-game1.png');
+            background-image: url('./assets/beach1.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -20,7 +20,6 @@
 </head>
 
 <body>
-    <!-- <h1 style="text-align:center;">เกมจับคู่ตัวอักษร</h1> -->
     <br>
     <button class="button" onclick="window.location.href='main.html'"><span> กลับหน้าแรก </span></button>
     <br>
@@ -30,23 +29,27 @@
         var height = window.innerHeight
         var sources = {
             beach: 'win1.1.png',
-            num2: 'photo-1.1.png',
+            num2: 'photo-1.1.png',              //รูปไก่ ก
             num2_glow: 'photo-1.2.png',
-            num2_black: 'box2-black.png', //รูปไก่ ก
-            num3: 'photo-15.1.png',
+            num2_black: 'box2-black.png',       
+            num2_black_2: '1.png',
+            num3: 'photo-15.1.png',             //รูป ฎ
             num3_glow: 'photo-15.2.png',
-            num3_black: 'box3-black.png', //รูป ฎ
+            num3_black: 'box3-black.png',       
+            num3_black_2: 'photo-front-2.11.png',
             num4: 'photo-22.1.png',             //รูปถุง ถ
             num4_glow: 'photo-22.2.png',
             num4_black: 'box4-black.png',
+            num4_black_2: 'photo-front-2.13.png',
             num1: 'photo-32.1.png',             //รูปเรือสำเภา ภ
             num1_glow: 'photo-32.2.png',
             num1_black: 'box1-black.png',
+            num1_black_2: 'photo-front-2.15.png',
         }
         var numImages = sources.length
 
         function loadImages(sources, callback) {
-            var assetDir = './assets/'
+            var assetDir = './assets/'          //ดึงภาพจากโฟลเดอร์ assets
             var images = {}
             var loadedImages = 0
 
@@ -70,13 +73,13 @@
                 return false
             }
         }
-        function drawBackground(background, beachImg, text) {
+        function drawBackground(background, beachImg) {
             var context = background.getContext()
             context.drawImage(beachImg, 0, 0)
-            context.setAttr('font', '20pt Calibri')
-            context.setAttr('textAlign', 'center')
-            context.setAttr('fillStyle', 'white')
-            context.fillText(text, background.getStage().width() / 2, 40)
+            // context.setAttr('font', '20pt Calibri')
+            // context.setAttr('textAlign', 'center')
+            // context.setAttr('fillStyle', 'white')
+            // context.fillText(background.getStage().width() / 2, 40)
         }
 
         function initStage(images) {
@@ -101,31 +104,47 @@
                     y: 451,
                 },
                 num4: {
-                    x: 400,
+                    x: 400,       
                     y: 151,
                 },
                 num3: {
-                    x: 400,
+                    x: 400,       
                     y: 1,
                 },
+                
             }
 
-
             var outlines = {
-                num2_black: {  //ข
+                num2_black: {     
                     x: 750,
                     y: 1,
                 },
-                num1_black: {  //ก
+                num2_black_2: {
+                    x: 900,
+                    y: 1,
+                },
+                num1_black: {     
                     x: 750,
                     y: 301,
                 },
-                num4_black: {  //ง
+                num1_black_2: {
+                    x: 900,
+                    y: 301,
+                },
+                num4_black: {     
                     x: 750,
                     y: 451,
                 },
+                num4_black_2: {
+                    x: 900,
+                    y: 451,
+                },
                 num3_black: {
-                    x: 750,      //ค
+                    x: 750,       
+                    y: 151,
+                },
+                num3_black_2: {
+                    x: 900,
                     y: 151,
                 },
             }
@@ -161,8 +180,7 @@
                             numTH.inRightPlace = true
 
                             if (++score >= 4) {
-                                var text = 'You win!'
-                                drawBackground(background, images.beach, text)
+                                drawBackground(background, images.beach)
                             }
 
                             // disable drag and drop
@@ -191,7 +209,7 @@
                 })()
             }
 
-            // create animal outlines
+            // สร้าง animal outlines
             for (var key in outlines) {
                 // anonymous function to induce scope
                 ; (function () {
@@ -211,11 +229,11 @@
             stage.add(background)
             stage.add(num44Layer)
 
-            drawBackground(
-                background,
-                images.beach,
-                'Ahoy!'
-            )
+            // drawBackground(
+            //     background,
+            //     images.beach,
+            //     'Ahoy!'
+            // )
         }
         loadImages(sources, initStage)
     </script>
