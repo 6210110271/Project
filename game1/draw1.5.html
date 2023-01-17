@@ -12,7 +12,7 @@
             padding: 0;
             overflow: hidden;
             /* background-color: #f0f0f0; */
-            background-image: url('./assets/draw/draw2.png');
+            background-image: url('./assets/draw/1.5.png');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -23,14 +23,23 @@
 <body>
     <br><br><br>
     &emsp;
-    <button class="button" onclick="window.location.href='draw.html'"><span> หน้าก่อนหน้า </span></button>
+    <button class="button" onclick="window.location.href='draw1.4.html'"><span> หน้าก่อนหน้า </span></button>
     &emsp;&emsp;
-    <button class="buttonD" onclick="window.location.href='draw2.html'"><span> ลบทั้งหมด </span></button>
+    <button class="buttonD" onclick="window.location.href='draw1.5.html'"><span> ลบทั้งหมด </span></button>
     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
     <button class="button" onclick="window.location.href='main.html'"><span> หน้าถัดไป </span></button>
-    <br><br><br><br><br><br><br>
-    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+    <br><br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+    &emsp;&emsp;&emsp;&emsp;&emsp;
+    <audio controls>
+      <source src="assets/เสียง/เสียงฏ.ogg" type="audio/ogg">
+      <source src="assets/เสียง/เสียงฏ.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <br><br><br>
+    <!-- สร้างToolที่มี ดินสอ,ยางลบ -->
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
     Tool:
     <select id="tool">
         <option value="brush">ดินสอ</option>
@@ -39,9 +48,9 @@
     <div id="container"></div>
     <script>
       var width = window.innerWidth;
-      var height = window.innerHeight - 25;
+      var height = window.innerHeight - 25; 
 
-      // first we need Konva core things: stage and layer
+      //เราต้องมีสิ่งหลักของ Konva คือ stage และ layer
       var stage = new Konva.Stage({
         container: 'container',
         width: width,
@@ -51,12 +60,11 @@
       var layer = new Konva.Layer();
       stage.add(layer);
 
-      // then we are going to draw into special canvas element
       var canvas = document.createElement('canvas');
       canvas.width = stage.width();
       canvas.height = stage.height();
 
-      // created canvas we can add to layer as "Konva.Image" element
+      // สร้างcanvasเสร็จ เราสามารถเพิ่ม layer เป็นองค์ประกอบของ "Konva.Image" ได้
       var image = new Konva.Image({
         image: canvas,
         x: 100,
@@ -64,36 +72,33 @@
       });
       layer.add(image);
 
-      // Good. Now we need to get access to context element
+      // กำหนดลายเส้นที่ต้องการ
       var context = canvas.getContext('2d');
-      context.strokeStyle = '#ff6600';
+      context.strokeStyle = '#ff6600'; 
       context.lineJoin = 'round';
-      context.lineWidth = 5;
+      context.lineWidth = 5;           
 
       var isPaint = false;
       var lastPointerPosition;
       var mode = 'brush';
 
-      // now we need to bind some events
-      // we need to start drawing on mousedown
-      // and stop drawing on mouseup
+      // เริ่มเขียนเมือ mousedown
+      // หยุดเขียนเมื่อ mouseup
       image.on('mousedown touchstart', function () {
         isPaint = true;
         lastPointerPosition = stage.getPointerPosition();
       });
 
-      // will it be better to listen move/end events on the window?
-
       stage.on('mouseup touchend', function () {
         isPaint = false;
       });
 
-      // and core function - drawing
+      // ฟังก์ชันหลัก - การวาด
       stage.on('mousemove touchmove', function () {
         if (!isPaint) {
           return;
         }
-
+      // เช็ค mode 
         if (mode === 'brush') {
           context.globalCompositeOperation = 'source-over';
         }
@@ -117,7 +122,7 @@
         context.stroke();
 
         lastPointerPosition = pos;
-        // redraw manually
+        // วาดใหม่ด้วยตัวเอง
         layer.batchDraw();
       });
 

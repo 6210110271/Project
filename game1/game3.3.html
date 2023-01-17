@@ -29,22 +29,22 @@
         var height = window.innerHeight
         var sources = {
             beach: 'win1.1.png',
-            num2: 'photo-front-2.1.png',        // ข
-            num2_glow: 'photo-front-2.2.png',
-            num2_black: 'box2-black.png',
-            num2_black_2: 'photo-2.png',       
-            num3: 'photo-front-2.3.png',             //ฃ
-            num3_glow: 'photo-front-2.4.png',
-            num3_black: 'box3-black.png',
-            num3_black_2: 'photo-3.png',        
-            num4: 'photo-front-2.5.png',             //ช
-            num4_glow: 'photo-front-2.6.png',
+            num2: 'photo-front-3.4.png',              //รูปไก่ ก
+            num2_glow: 'photo-front-3.5.png',
+            num2_black: 'box2-black.png',       
+            num2_black_2: 'photo-front-3.3.2.png',
+            num3: 'photo-front-3.10.png',             //รูป ฎ
+            num3_glow: 'photo-front-3.11.png',
+            num3_black: 'box3-black.png',       
+            num3_black_2: 'photo-front-3.9.png',
+            num4: 'photo-front-3.13.png',             //รูปถุง ถ
+            num4_glow: 'photo-front-3.14.png',
             num4_black: 'box4-black.png',
-            num4_black_2: 'photo-10.png',
-            num1: 'photo-front-2.7.png',             //ซ
-            num1_glow: 'photo-front-2.8.png',
+            num4_black_2: 'photo-front-3.12.png',
+            num1: 'photo-front-3.7.png',             //รูปเรือสำเภา ภ
+            num1_glow: 'photo-front-3.8.png',
             num1_black: 'box1-black.png',
-            num1_black_2: 'photo-11.png',
+            num1_black_2: 'photo-front-3.6.png',
         }
         var numImages = sources.length
 
@@ -60,6 +60,8 @@
                 }
                 images[src].src = assetDir + sources[src]
             }
+
+
         }
         function isNearOutline(numTH, outline) {
             var a = numTH
@@ -95,7 +97,7 @@
 
             // image positions
             var num44 = {
-                num4: {
+                num2: {
                     x: 400,
                     y: 301,
                 },
@@ -103,11 +105,11 @@
                     x: 400,
                     y: 451,
                 },
-                num3: {
+                num4: {
                     x: 400,       
                     y: 151,
                 },
-                num2: {
+                num3: {
                     x: 400,       
                     y: 1,
                 },
@@ -115,36 +117,36 @@
             }
 
             var outlines = {
-                num4_black: {     //ข
+                num2_black: {     
                     x: 750,
                     y: 1,
-                },
-                num4_black_2: {     
-                    x: 900,
-                    y: 1,
-                },
-                num1_black: {     //ซ
-                    x: 750,
-                    y: 301,
-                },
-                num1_black_2: {     
-                    x: 900,
-                    y: 301,
-                },
-                num3_black: {     //ช
-                    x: 750,
-                    y: 451,
-                },
-                num3_black_2: {    
-                    x: 900,
-                    y: 451,
-                },
-                num2_black: {
-                    x: 750,       //ข
-                    y: 151,
                 },
                 num2_black_2: {
-                    x: 900,       
+                    x: 900,
+                    y: 1,
+                },
+                num1_black: {     
+                    x: 750,
+                    y: 301,
+                },
+                num1_black_2: {
+                    x: 900,
+                    y: 301,
+                },
+                num4_black: {     
+                    x: 750,
+                    y: 451,
+                },
+                num4_black_2: {
+                    x: 900,
+                    y: 431,
+                },
+                num3_black: {
+                    x: 750,       
+                    y: 151,
+                },
+                num3_black_2: {
+                    x: 900,
                     y: 151,
                 },
             }
@@ -226,8 +228,12 @@
                 })()
             }
 
+            
+
             stage.add(background)
             stage.add(num44Layer)
+
+            
 
             // drawBackground(
             //     background,
@@ -236,7 +242,7 @@
             // )
         }
         loadImages(sources, initStage)
+        
     </script>
-</body>
 
 </html>
